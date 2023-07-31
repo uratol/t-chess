@@ -21,7 +21,7 @@ It's include the interaction(!), rendering (!!) and AI (soon).
  - Select the target server and database and click Publish.
  - Change the file "t-chess.but" with your database credentials
  - Open the PowerShell console and set the font NSimSun or another supports unicode chess symbols.
- - Run "t-chess.but"
+ - Run "t-chess.bat"
  - You will see the starting chess board and a command promt. 
 
 **How to play:**
@@ -36,6 +36,6 @@ It's include the interaction(!), rendering (!!) and AI (soon).
 	 - resign
 		 - Finish the game
 	 - export
-		 - Get the current position as [FEN](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation) notation(You can use https://lichess.org/editor )
+		 - Get the current position as [FEN](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation) notation (You can use https://lichess.org/editor)
 	 - import *'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'*
 		 - Set specified FEN position to the board
