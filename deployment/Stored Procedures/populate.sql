@@ -1,0 +1,41 @@
+﻿CREATE proc [deployment].[populate]
+as
+
+if exists(select * from chess.colored_piece) begin
+	print 'Lookup tables already populated, exiting'
+	return
+end
+
+set xact_abort on
+
+begin tran
+	insert chess.color(id)
+	 values ('Black')
+		  , ('White')
+
+	insert [chess].[piece](id
+						 , render_symbol)
+	 values ('Bishop', nchar(9821))
+		  , ('King', nchar(9818))
+		  , ('Knight', nchar(9822))
+		  , ('Pawn', nchar(9823))
+		  , ('Queen', nchar(9819))
+		  , ('Rook', nchar(9820))
+
+	
+	insert chess.colored_piece(id, piece_id, color_id, render_symbol, fen_symbol)
+	values 
+		  ('Black Bishop','Bishop','Black', nchar(9821), 'b')
+		, ('Black King','King','Black', nchar(9818), 'k')
+		, ('Black Knight','Knight','Black', nchar(9822), 'n')
+		, ('Black Pawn','Pawn','Black', nchar(9823), 'p')
+		, ('Black Queen','Queen','Black', nchar(9819), 'q')
+		, ('Black Rook','Rook','Black', nchar(9820), 'r')
+		, ('White Bishop','Bishop','White', nchar(9815), 'B')
+		, ('White King','King','White', nchar(9812), 'K')
+		, ('White Knight','Knight','White', nchar(9816), 'N')
+		, ('White Pawn','Pawn','White', nchar(9817), 'P')
+		, ('White Queen','Queen','White', nchar(9813), 'Q')
+		, ('White Rook','Rook','White', nchar(9814), 'R')
+
+commit

@@ -80,10 +80,14 @@
     <Folder Include="ai\" />
     <Folder Include="ai\Stored Procedures\" />
     <Folder Include="dbo\Synonyms\" />
+    <Folder Include="deployment\" />
+    <Folder Include="deployment\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="db.compare.scmp" />
     <None Include="db.publish.xml" />
+    <None Include="README.md" />
+    <None Include="t-chess.bat" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\test.sql" />
@@ -232,6 +236,8 @@
     <Build Include="ai\Stored Procedures\choose_move.sql" />
     <Build Include="Security\ai.sql" />
     <Build Include="dbo\Synonyms\back.sql" />
+    <Build Include="deployment\Stored Procedures\populate.sql" />
+    <Build Include="Security\deployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac">
@@ -239,5 +245,8 @@
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="populate.sql" />
   </ItemGroup>
 </Project>
