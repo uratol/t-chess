@@ -52,7 +52,7 @@ else begin
 	if @state in ('White to move', 'Black to move')
 		set @commands = concat('E2'
 							, case when  @selected_piece is null then ', E2 E4' end
-							, ', ..., resign, export, init'
+							, ', ..., resign, export, import'
 							)
 	else
 		set @commands = 'play'

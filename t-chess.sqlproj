@@ -88,6 +88,7 @@
     <None Include="db.publish.xml" />
     <None Include="README.md" />
     <None Include="t-chess.bat" />
+    <None Include="screenshot.png" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\test.sql" />
@@ -132,7 +133,6 @@
     <Build Include="test\Stored Procedures\chess.board_from_fen.sql" />
     <Build Include="dbo\Stored Procedures\resign.sql" />
     <Build Include="dbo\Stored Procedures\play.sql" />
-    <Build Include="dbo\Stored Procedures\init.sql" />
     <Build Include="dbo\Stored Procedures\H8.sql" />
     <Build Include="dbo\Stored Procedures\H7.sql" />
     <Build Include="dbo\Stored Procedures\H6.sql" />
@@ -238,6 +238,7 @@
     <Build Include="dbo\Synonyms\back.sql" />
     <Build Include="deployment\Stored Procedures\populate.sql" />
     <Build Include="Security\deployment.sql" />
+    <Build Include="dbo\Stored Procedures\import.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac">

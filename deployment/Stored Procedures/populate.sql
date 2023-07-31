@@ -1,8 +1,23 @@
 ﻿CREATE proc [deployment].[populate]
 as
 
+if not exists(select * from tools.number)
+	with n as
+		(
+			select *
+			from (values
+			(0), (1), (2), (3), (4), (5), (6), (7), (8), (9)
+			) as v (n))
+	insert tools.number(n)
+		select n.n
+		 + n2.n * 10
+		 + n3.n * 100
+		from n
+			cross join n as n2
+			cross join n as n3
+
 if exists(select * from chess.colored_piece) begin
-	print 'Lookup tables already populated, exiting'
+	print 'Chess lookup tables already populated, exiting'
 	return
 end
 

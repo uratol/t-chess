@@ -1,4 +1,4 @@
-﻿CREATE proc [dbo].[init]
+﻿CREATE proc [dbo].[import]
   @fen nvarchar(256)
 , @game_id uniqueidentifier = null
 as
