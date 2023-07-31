@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>t_chess</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{5f7adbd5-c269-432d-8844-68b2f41d8f71}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>t_chess</RootNamespace>
+    <AssemblyName>t_chess</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Security\" />
+    <Folder Include="test\" />
+    <Folder Include="test\Views\" />
+    <Folder Include="test\Functions\" />
+    <Folder Include="test\Stored Procedures\" />
+    <Folder Include="Database Triggers\" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="tools\" />
+    <Folder Include="tools\Tables\" />
+    <Folder Include="chess\" />
+    <Folder Include="chess\Tables\" />
+    <Folder Include="tools\Functions\" />
+    <Folder Include="render\" />
+    <Folder Include="render\Functions\" />
+    <Folder Include="private\" />
+    <Folder Include="private\Functions\" />
+    <Folder Include="chess\Functions\" />
+    <Folder Include="render\Stored Procedures\" />
+    <Folder Include="chess\Stored Procedures\" />
+    <Folder Include="tools\Views\" />
+    <Folder Include="ai\" />
+    <Folder Include="ai\Stored Procedures\" />
+    <Folder Include="dbo\Synonyms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="db.compare.scmp" />
+    <None Include="db.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Security\test.sql" />
+    <Build Include="test\Views\test.sql" />
+    <Build Include="test\Functions\is_equal.sql" />
+    <Build Include="test\Functions\fail.sql" />
+    <Build Include="test\Functions\assert_null.sql" />
+    <Build Include="test\Functions\assert_not_null.sql" />
+    <Build Include="test\Functions\assert_equals.sql" />
+    <Build Include="test\Stored Procedures\run.sql" />
+    <Build Include="Database Triggers\check_test_name_convention.sql" />
+    <Build Include="dbo\Stored Procedures\error.sql" />
+    <Build Include="tools\Tables\number.sql" />
+    <Build Include="chess\Tables\colored_piece.sql" />
+    <Build Include="chess\Tables\move.sql" />
+    <Build Include="chess\Tables\game.sql" />
+    <Build Include="chess\Tables\board_piece.sql" />
+    <Build Include="chess\Tables\board.sql" />
+    <Build Include="chess\Tables\color.sql" />
+    <Build Include="chess\Tables\piece.sql" />
+    <Build Include="tools\Functions\format_message.sql" />
+    <Build Include="render\Functions\sprite.sql" />
+    <Build Include="render\Functions\esc.sql" />
+    <Build Include="render\Functions\square.sql" />
+    <Build Include="private\Functions\test.json_hash.sql" />
+    <Build Include="chess\Functions\board_to_json.sql" />
+    <Build Include="chess\Functions\is_king_under_check.sql" />
+    <Build Include="chess\Functions\coordinates_to_square.sql" />
+    <Build Include="chess\Functions\piece_potential_moves.sql" />
+    <Build Include="chess\Functions\piece_legal_moves.sql" />
+    <Build Include="tools\Functions\split_string_by_char.sql" />
+    <Build Include="chess\Functions\square_to_coordinates.sql" />
+    <Build Include="test\Stored Procedures\chess.start_game.sql" />
+    <Build Include="test\Stored Procedures\chess.piece_legal_moves%40rook.sql" />
+    <Build Include="test\Stored Procedures\chess.piece_legal_moves%40queen.sql" />
+    <Build Include="test\Stored Procedures\chess.piece_legal_moves%40pawn.sql" />
+    <Build Include="test\Stored Procedures\chess.piece_legal_moves%40knight.sql" />
+    <Build Include="test\Stored Procedures\chess.piece_legal_moves%40king.sql" />
+    <Build Include="test\Stored Procedures\chess.piece_legal_moves%40bishop.sql" />
+    <Build Include="test\Stored Procedures\chess.is_king_under_check.sql" />
+    <Build Include="test\Stored Procedures\chess.board_to_json.sql" />
+    <Build Include="test\Stored Procedures\chess.board_from_fen.sql" />
+    <Build Include="dbo\Stored Procedures\resign.sql" />
+    <Build Include="dbo\Stored Procedures\play.sql" />
+    <Build Include="dbo\Stored Procedures\init.sql" />
+    <Build Include="dbo\Stored Procedures\H8.sql" />
+    <Build Include="dbo\Stored Procedures\H7.sql" />
+    <Build Include="dbo\Stored Procedures\H6.sql" />
+    <Build Include="dbo\Stored Procedures\H5.sql" />
+    <Build Include="dbo\Stored Procedures\H4.sql" />
+    <Build Include="dbo\Stored Procedures\H3.sql" />
+    <Build Include="dbo\Stored Procedures\H2.sql" />
+    <Build Include="dbo\Stored Procedures\H1.sql" />
+    <Build Include="dbo\Stored Procedures\G8.sql" />
+    <Build Include="dbo\Stored Procedures\G7.sql" />
+    <Build Include="dbo\Stored Procedures\G6.sql" />
+    <Build Include="dbo\Stored Procedures\G5.sql" />
+    <Build Include="dbo\Stored Procedures\G4.sql" />
+    <Build Include="dbo\Stored Procedures\G3.sql" />
+    <Build Include="dbo\Stored Procedures\G2.sql" />
+    <Build Include="dbo\Stored Procedures\G1.sql" />
+    <Build Include="dbo\Stored Procedures\F8.sql" />
+    <Build Include="dbo\Stored Procedures\F7.sql" />
+    <Build Include="dbo\Stored Procedures\F6.sql" />
+    <Build Include="dbo\Stored Procedures\F5.sql" />
+    <Build Include="dbo\Stored Procedures\F4.sql" />
+    <Build Include="dbo\Stored Procedures\F3.sql" />
+    <Build Include="dbo\Stored Procedures\F2.sql" />
+    <Build Include="dbo\Stored Procedures\F1.sql" />
+    <Build Include="dbo\Stored Procedures\E8.sql" />
+    <Build Include="dbo\Stored Procedures\E7.sql" />
+    <Build Include="dbo\Stored Procedures\E6.sql" />
+    <Build Include="dbo\Stored Procedures\E5.sql" />
+    <Build Include="dbo\Stored Procedures\e4.sql" />
+    <Build Include="dbo\Stored Procedures\E3.sql" />
+    <Build Include="dbo\Stored Procedures\e2.sql" />
+    <Build Include="dbo\Stored Procedures\E1.sql" />
+    <Build Include="dbo\Stored Procedures\D8.sql" />
+    <Build Include="dbo\Stored Procedures\D7.sql" />
+    <Build Include="dbo\Stored Procedures\D6.sql" />
+    <Build Include="dbo\Stored Procedures\D5.sql" />
+    <Build Include="dbo\Stored Procedures\D4.sql" />
+    <Build Include="dbo\Stored Procedures\D3.sql" />
+    <Build Include="dbo\Stored Procedures\D2.sql" />
+    <Build Include="dbo\Stored Procedures\D1.sql" />
+    <Build Include="dbo\Stored Procedures\C8.sql" />
+    <Build Include="dbo\Stored Procedures\C7.sql" />
+    <Build Include="dbo\Stored Procedures\C6.sql" />
+    <Build Include="dbo\Stored Procedures\C5.sql" />
+    <Build Include="dbo\Stored Procedures\C4.sql" />
+    <Build Include="dbo\Stored Procedures\C3.sql" />
+    <Build Include="dbo\Stored Procedures\C2.sql" />
+    <Build Include="dbo\Stored Procedures\C1.sql" />
+    <Build Include="dbo\Stored Procedures\B8.sql" />
+    <Build Include="dbo\Stored Procedures\B7.sql" />
+    <Build Include="dbo\Stored Procedures\B6.sql" />
+    <Build Include="dbo\Stored Procedures\B5.sql" />
+    <Build Include="dbo\Stored Procedures\B4.sql" />
+    <Build Include="dbo\Stored Procedures\B3.sql" />
+    <Build Include="dbo\Stored Procedures\B2.sql" />
+    <Build Include="dbo\Stored Procedures\B1.sql" />
+    <Build Include="dbo\Stored Procedures\A8.sql" />
+    <Build Include="dbo\Stored Procedures\A7.sql" />
+    <Build Include="dbo\Stored Procedures\A6.sql" />
+    <Build Include="dbo\Stored Procedures\A5.sql" />
+    <Build Include="dbo\Stored Procedures\A4.sql" />
+    <Build Include="dbo\Stored Procedures\A3.sql" />
+    <Build Include="dbo\Stored Procedures\A2.sql" />
+    <Build Include="dbo\Stored Procedures\A1.sql" />
+    <Build Include="render\Stored Procedures\clear_screen.sql" />
+    <Build Include="render\Stored Procedures\text.sql" />
+    <Build Include="render\Stored Procedures\game.sql" />
+    <Build Include="render\Stored Procedures\board.sql" />
+    <Build Include="chess\Stored Procedures\board_from_fen.sql" />
+    <Build Include="chess\Stored Procedures\select_piece.sql" />
+    <Build Include="chess\Stored Procedures\start_game.sql" />
+    <Build Include="chess\Stored Procedures\error.sql" />
+    <Build Include="chess\Stored Procedures\make_move_internal.sql" />
+    <Build Include="chess\Stored Procedures\make_move.sql" />
+    <Build Include="chess\Stored Procedures\get_or_create_game.sql" />
+    <Build Include="Security\tools.sql" />
+    <Build Include="Security\render.sql" />
+    <Build Include="Security\private.sql" />
+    <Build Include="Security\chess.sql" />
+    <Build Include="tools\Views\newid.sql" />
+    <Build Include="chess\Functions\make_move_json.sql" />
+    <Build Include="chess\Functions\json_board_to_fen.sql" />
+    <Build Include="chess\Functions\json_board_from_fen.sql" />
+    <Build Include="chess\Functions\coordinates_to_move.sql" />
+    <Build Include="chess\Functions\color_opposite.sql" />
+    <Build Include="chess\Functions\calc_game_state.sql" />
+    <Build Include="chess\Functions\parse_fen_squares.sql" />
+    <Build Include="chess\Functions\parse_fen.sql" />
+    <Build Include="chess\Functions\parse_pieces.sql" />
+    <Build Include="test\Stored Procedures\chess.make_move_json%40pawn_turning.sql" />
+    <Build Include="test\Stored Procedures\chess.make_move_json.sql" />
+    <Build Include="test\Stored Procedures\chess.json_board_to_fen.sql" />
+    <Build Include="test\Stored Procedures\chess.calc_game_state.sql" />
+    <Build Include="test\Stored Procedures\ai.choose_move.sql" />
+    <Build Include="dbo\Stored Procedures\undo.sql" />
+    <Build Include="dbo\Stored Procedures\export.sql" />
+    <Build Include="chess\Stored Procedures\update_game_state.sql" />
+    <Build Include="chess\Stored Procedures\make_move_player.sql" />
+    <Build Include="chess\Stored Procedures\make_move_ai.sql" />
+    <Build Include="chess\Stored Procedures\generate_wrappers.sql" />
+    <Build Include="ai\Stored Procedures\choose_move.sql" />
+    <Build Include="Security\ai.sql" />
+    <Build Include="dbo\Synonyms\back.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
+    </ArtifactReference>
+  </ItemGroup>
+</Project>
