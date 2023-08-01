@@ -28,8 +28,8 @@ It's include the interaction(!), rendering (!!) and AI (soon).
 
  - Enter the square coordinates, the space and target square, i.e. "e2 e4" and press enter. 
  - Then press ";" to send command to SQL server.
-	 - Also you can enter only the starting square, i.e. "e2". In this case you will se the allowable moves for the selected piece. 
- - Wait for computer to make its move.
+	 - You can enter only the starting square, i.e. "e2". In this case you will se the allowable moves for the selected piece. 
+ - Wait for computer to make its move and do it again.
  - Also the next command are available:
 	- play
 		- Starts new game when the current is finished.

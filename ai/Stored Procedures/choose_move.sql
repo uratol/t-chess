@@ -16,6 +16,8 @@ begin
 		, @col_to = null
 		, @row_to = null
 
+	-- TODO:  Implement min-max
+	-- Do random move for now
 	select top(1)
 		  @col_from = p.col
 		, @row_from = p.row
