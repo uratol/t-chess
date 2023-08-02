@@ -1,6 +1,8 @@
 ﻿CREATE proc [deployment].[populate]
 as
 
+set xact_abort on
+
 if not exists(select * from tools.number)
 	with n as
 		(
@@ -16,12 +18,16 @@ if not exists(select * from tools.number)
 			cross join n as n2
 			cross join n as n3
 
+if not exists(select * from engine_native.number)
+	insert engine_native.number(n)
+		select n
+		from tools.number
+		where n < 8
+
 if exists(select * from chess.colored_piece) begin
 	print 'Chess lookup tables already populated, exiting'
 	return
 end
-
-set xact_abort on
 
 begin tran
 	insert chess.color(id)

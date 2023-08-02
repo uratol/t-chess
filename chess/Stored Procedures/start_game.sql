@@ -21,4 +21,7 @@ begin tran
 	insert chess.game(id, state, board_id, white_player, black_player)
 		select @game_id, @color_to_move + ' to move', @board_id, @white_player, @black_player
 
+	if @white_player = 'AI' and @color_to_move = 'White'
+			or @black_player = 'AI' and @color_to_move = 'Black'
+		exec chess.chess.make_move_ai @game_id = @game_id
 commit

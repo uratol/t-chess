@@ -2,15 +2,17 @@
   @game_id uniqueidentifier
 , @col int
 , @row int
-, @color_to_move varchar(max)
 as
 
 declare @board_id uniqueidentifier
 , @piece_id uniqueidentifier
 , @piece_color varchar(max)
+, @color_to_move varchar(max)
 
 select @board_id   = g.board_id
+	, @color_to_move = b.color_to_move
 from chess.game as g
+	join chess.board as b on b.id = g.board_id
 where g.id = @game_id
 
 select @piece_id	= bp.id

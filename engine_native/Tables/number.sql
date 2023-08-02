@@ -1,0 +1,6 @@
+﻿CREATE TABLE [engine_native].[number] (
+    [n] INT NOT NULL,
+    PRIMARY KEY NONCLUSTERED ([n] ASC)
+)
+WITH (DURABILITY = SCHEMA_ONLY, MEMORY_OPTIMIZED = ON);
+

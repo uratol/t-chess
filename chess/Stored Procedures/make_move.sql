@@ -1,6 +1,6 @@
 ﻿CREATE proc [chess].[make_move]
   @from nchar(2)
-, @to nvarchar(50)
+, @to nvarchar(2)
 , @game_id uniqueidentifier = null
 as
 set nocount on
@@ -20,10 +20,6 @@ declare
 , @selected_piece_color varchar(max)
 , @piece_from_color varchar(max)
 , @error_message nvarchar(max)
-, @color_to_move varchar(max)
-, @white_player varchar(max)
-, @black_player varchar(max)
-, @current_player varchar(max)
 , @opponent varchar(max)
 
 select @selected_piece_id = b.selected_piece
@@ -31,10 +27,6 @@ select @selected_piece_id = b.selected_piece
 	, @selected_piece_row = bp.row
 	, @selected_piece_color = cp.color_id
 	, @board_id = g.board_id
-	, @color_to_move = b.color_to_move
-	, @white_player = g.white_player
-	, @black_player = g.black_player
-	, @current_player = iif(b.color_to_move = 'White', g.white_player, g.black_player)
 	, @opponent = iif(b.color_to_move = 'White', g.black_player, g.white_player)
 from chess.game as g
 	join chess.board as b on b.id = g.board_id
@@ -61,7 +53,7 @@ where bp.board_id = @board_id
 begin try
 
 	if @to is null and (@selected_piece_id is null or @selected_piece_color = @piece_from_color)
-		exec chess.select_piece @game_id = @game_id, @col = @col_from, @row = @row_from, @color_to_move = @color_to_move
+		exec chess.select_piece @game_id = @game_id, @col = @col_from, @row = @row_from
 	else 
 	begin
 		if @to is null and @selected_piece_id is not null
@@ -88,7 +80,10 @@ begin try
 
 end try
 begin catch
+	
 	set @error_message = error_message()
+	
+	-- if @@trancount > 0 rollback tran
 
 end catch
 

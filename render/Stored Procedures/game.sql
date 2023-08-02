@@ -4,6 +4,9 @@
 , @error_message nvarchar(max) = null
 as
 
+if render.enabled() = 0 -- may be disabled during tests
+	return
+
 declare @board_id uniqueidentifier
 , @state nvarchar(max)
 , @ordinal nvarchar(10)
@@ -32,34 +35,18 @@ exec render.[text] @text = '%1 Game %2'
 				 , @p1 = @title
 				 , @p2 = @counter
 
-exec render.[text] @text = '%1 vs %2'
+exec render.[text] @text = '%1 vs %2. %3'
 				 , @p1 = @white_player
 				 , @p2 = @black_player
+				 , @p3 = 'Put "help" to display commands'
 
 exec render.[text] @text = ''
 
-exec render.board @board_id = @board_id, @render_labels = @render_labels
+declare @flip bit = iif(@black_player = 'Player' and @white_player = 'AI', 1, 0)
 
+exec render.board @board_id = @board_id, @render_labels = @render_labels, @flip = @flip
 
-exec render.[text] @text = ''
-
-if @error_message is not null
-	exec render.[text] @text = @error_message, @is_error = 1
-else begin
-	
-	declare @commands nvarchar(4000) = ''
-
-	if @state in ('White to move', 'Black to move')
-		set @commands = concat('E2'
-							, case when  @selected_piece is null then ', E2 E4' end
-							, ', ..., resign, export, import'
-							)
-	else
-		set @commands = 'play'
-
-	set @commands = render.sprite(@commands, '90m')
-	exec render.[text] @text = 'Available commands: %1', @p1 = @commands
-end
+exec render.[text] @text = @error_message, @is_error = 1
 
 set @state = case @state 
 				when 'White to move' 

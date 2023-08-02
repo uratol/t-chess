@@ -1,17 +1,22 @@
 ﻿CREATE proc [render].[board]
   @board_id uniqueidentifier
 , @render_labels bit = 1
+, @flip bit = 0
 as
 
 declare @render_str nvarchar(max)
 , @selected_piece_id uniqueidentifier
+, @legal_moves nvarchar(max)
 
 select @selected_piece_id = selected_piece
 from chess.board
 where id = @board_id
 
+if @selected_piece_id is not null
+	exec engine.legal_moves @piece_id = @selected_piece_id, @moves = @legal_moves out
+
 select @render_str = string_agg(rendered_row, '
-') within group (order by row desc)
+') within group (order by iif(@flip = 1, -row, row) desc)
 from (
 	select r.n								 as row
 		 , concat(
@@ -34,7 +39,7 @@ from (
 							then 4
 						else 0 end
 				   )
-			   , '') within group (order by c.n) 
+			   , '') within group (order by iif(@flip = 1, -c.n, c.n)) 
 		   )
 		   as rendered_row
 	from tools.number as r
@@ -48,11 +53,9 @@ from (
 			on cp.id = bp.colored_piece_id
 		left join chess.piece as p
 			on p.id = cp.piece_id
-		left join chess.piece_legal_moves(
-				[chess].[board_to_json](@board_id)
-				, @selected_piece_id
-				, 0 -- @attack_only
-				, 1 -- @check_king
+		left join openjson(@legal_moves) with(
+				  col tinyint
+				, row tinyint
 			) as m on m.col = c.n and m.row = r.n
 		outer apply (
 			select top(1) 
@@ -71,7 +74,10 @@ from (
 	group by r.n) as t
 
 if @render_labels = 1
+	declare @labels nvarchar(64) = 'a  b  c  d  e  f  g  h'
+	if @flip = 1 set @labels = reverse(@labels)
+	
 	set @render_str += '
-    a  b  c  d  e  f  g  h'
+    ' + @labels
 
 print @render_str

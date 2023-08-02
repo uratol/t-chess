@@ -49,15 +49,16 @@ if @target_piece_id is not null and @piece_color = @target_piece_color
 				   , @col = @col_to
 				   , @row = @row_to
 
-if not exists(
-	select *
-	from chess.piece_legal_moves(chess.board_to_json(@board_id), @piece_id
-		, 0 -- @attack_only
-		, 1 -- check_king
-		)
-	where col = @col_to
-		and row = @row_to
-	)
+
+
+declare @is_move_legal bit
+
+exec chess.is_move_lagal  @piece_id = @piece_id
+						, @col = @col_to
+						, @row = @row_to
+						, @result = @is_move_legal out
+
+if @is_move_legal = 0
 	exec chess.error @message = 'Illegal move to %square'
 				   , @col = @col_to
 				   , @row = @row_to
