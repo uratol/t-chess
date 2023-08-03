@@ -24,6 +24,15 @@ if not exists(select * from engine_native.number)
 		from tools.number
 		where n < 8
 
+if not exists(select * from engine.instance)
+	insert engine.instance(id, use_for_rules, use_for_ai, default_for_rules, default_for_ai)
+		select *
+		from (values
+				  ('native', 1, 1, 1, 1)
+				, ('json', 1, 1, 0, 0)
+				, ('stockfish', 0, 1, 0, 0)
+			) as v(id, use_for_rules, use_for_ai, default_for_rules, default_for_ai)
+
 if exists(select * from chess.colored_piece) begin
 	print 'Chess lookup tables already populated, exiting'
 	return

@@ -7,7 +7,7 @@
 , @estimation real = null out
 as
 
-declare @engine_proc_name sysname = concat('engine_', chess.engine() + '.ai_make_move')
+declare @engine_proc_name sysname = [engine].[proxy_pricedure_name]('ai_make_move')
 
 exec @engine_proc_name
 		  @board_id = @board_id

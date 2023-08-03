@@ -93,6 +93,7 @@
     <Folder Include="engine_json\Stored Procedures\" />
     <Folder Include="engine\Stored Procedures\" />
     <Folder Include="engine_native\User Defined Types\" />
+    <Folder Include="engine\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="db.compare.scmp" />
@@ -234,7 +235,6 @@
     <Build Include="Storage\engine.sql" />
     <Build Include="test\Functions\engine_native.assert_moves.sql" />
     <Build Include="render\Functions\enabled.sql" />
-    <Build Include="chess\Functions\engine.sql" />
     <Build Include="engine_json\Functions\make_move_json.sql" />
     <Build Include="engine_json\Functions\json_board_to_fen.sql" />
     <Build Include="engine_json\Functions\json_board_from_fen.sql" />
@@ -292,6 +292,8 @@
     <Build Include="Security\engine_native.sql" />
     <Build Include="Security\engine_json.sql" />
     <Build Include="Security\engine.sql" />
+    <Build Include="engine\Tables\instance.sql" />
+    <Build Include="engine_native\Stored Procedures\estimate.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac">
