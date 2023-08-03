@@ -9,9 +9,9 @@ declare @commands table (n int identity primary key, cmd nvarchar(64), descripti
 
 insert @commands(cmd, description)
 	values	
-		  ('E2', 'select piece')
-		, ('E4', 'move piece')
+		  ('E2', 'select piece/move peace')
 		, ('E2 E4', 'select and move piece')
+		, ('undo', 'move back')
 		, ('play new', 'Start new game')
 		, ('play black', 'Start new game black')
 		, ('play demo', 'Start new game AI vs AI')

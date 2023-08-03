@@ -57,6 +57,7 @@ begin try
 		update bp set 
 			  col = @col_to
 			, row = @row_to
+			, turned_from_colored_piece_id = case when turn_to.id is not null then colored_piece_id end
 			, colored_piece_id = isnull(turn_to.id, bp.colored_piece_id)
 		from chess.board_piece as bp
 			left join chess.colored_piece as turn_to on turn_to.id 

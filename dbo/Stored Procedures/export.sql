@@ -15,7 +15,7 @@ select @board_id = board_id
 from chess.game
 where id = @game_id
 
-declare @fen nvarchar(max) = chess.json_board_to_fen(chess.board_to_json(@board_id))
+declare @fen nvarchar(max) = engine_json.json_board_to_fen(engine_json.board_to_json(@board_id))
 
 set @fen = render.sprite(@fen, '32m')
 

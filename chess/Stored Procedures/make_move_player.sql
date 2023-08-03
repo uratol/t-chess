@@ -31,10 +31,10 @@ where bp.board_id = @board_id
 	and bp.is_captured = 0
 
 if @piece_id is null
-	exec chess.error @message = 'Invalid move from %square: square is empty', @col = @col_from, @row = @row_from
+	exec chess.error @message = 'Invalid move %square: square is empty or available for several pieces', @col = @col_from, @row = @row_from
 
 if @piece_color <> @color_to_move
-	exec chess.error @message = 'Invalid move from %square: wrong piece color', @col = @col_from, @row = @row_from
+	exec chess.error @message = 'Invalid move %square: wrong piece color', @col = @col_from, @row = @row_from
 
 select @captured_piece_id	   = bp.id
 	 , @captured_piece_color = cp.color_id

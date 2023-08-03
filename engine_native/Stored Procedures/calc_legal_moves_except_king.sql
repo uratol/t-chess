@@ -125,7 +125,8 @@ begin atomic
 				or exists( -- The pawn attacks another color piece
 					select 1
 					from [engine_native].piece as p
-					where p.col = m.col
+					where p.board_id = @board_id
+						and p.col = m.col
 						and p.row = m.row
 						and p.is_white <> @is_white
 						and p.is_captured = 0

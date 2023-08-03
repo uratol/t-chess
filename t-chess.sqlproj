@@ -223,7 +223,6 @@
     <Build Include="chess\Stored Procedures\make_move_ai.sql" />
     <Build Include="chess\Stored Procedures\generate_wrappers.sql" />
     <Build Include="Security\ai.sql" />
-    <Build Include="dbo\Synonyms\back.sql" />
     <Build Include="deployment\Stored Procedures\populate.sql" />
     <Build Include="Security\deployment.sql" />
     <Build Include="dbo\Stored Procedures\import.sql" />
@@ -295,6 +294,8 @@
     <Build Include="engine\Tables\instance.sql" />
     <Build Include="engine_native\Stored Procedures\estimate.sql" />
     <Build Include="test\Stored Procedures\engine_native.ai_make_move.sql" />
+    <Build Include="chess\Stored Procedures\undo_halfmove.sql" />
+    <Build Include="chess\Stored Procedures\select_move_by_target_square.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac">
