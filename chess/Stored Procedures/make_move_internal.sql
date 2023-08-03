@@ -10,7 +10,7 @@ as
 declare @color_to_move varchar(5)
 , @board_id uniqueidentifier
 , @piece_id uniqueidentifier
-, @target_piece_id uniqueidentifier
+, @captured_piece_id uniqueidentifier
 
 select @board_id = g.board_id
 	, @color_to_move = b.color_to_move
@@ -26,18 +26,19 @@ where bp.board_id = @board_id
 	  and bp.col = @col_from
 	  and bp.row = @row_from
 
-select @target_piece_id	   = bp.id
+select @captured_piece_id = bp.id
 from chess.board_piece as bp
 	left join chess.colored_piece as cp
 		on cp.id = bp.colored_piece_id
 where bp.board_id = @board_id
 	  and bp.col = @col_to
 	  and bp.row = @row_to
+	  and bp.is_captured = 0
 
 begin try
 	begin tran
 
-		insert chess.[move](board_id, half_move, from_col, from_row, to_col, to_row)
+		insert chess.[move](board_id, half_move, from_col, from_row, to_col, to_row, captured_piece_id)
 			select @board_id
 				, (select isnull(max(half_move) + 1, 1)
 					from chess.[move]
@@ -47,10 +48,11 @@ begin try
 				, @row_from
 				, @col_to
 				, @row_to
+				, @captured_piece_id
 
-		delete bp
+		update bp set is_captured = 1
 		from chess.board_piece as bp
-		where bp.id = @target_piece_id
+		where bp.id = @captured_piece_id
 
 		update bp set 
 			  col = @col_to

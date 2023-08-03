@@ -43,6 +43,7 @@ select @piece_id = id
 from chess.board_piece
 where board_id = @board_id
 	and chess.coordinates_to_square(col, row) = 'E2'
+	and is_captured = 0
 
 exec engine.legal_moves @piece_id = @piece_id, @moves = @moves out
 

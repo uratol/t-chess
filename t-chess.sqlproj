@@ -294,6 +294,7 @@
     <Build Include="Security\engine.sql" />
     <Build Include="engine\Tables\instance.sql" />
     <Build Include="engine_native\Stored Procedures\estimate.sql" />
+    <Build Include="test\Stored Procedures\engine_native.ai_make_move.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac">

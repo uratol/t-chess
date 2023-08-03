@@ -9,10 +9,10 @@ as
 
 declare 
   @piece_id uniqueidentifier
-, @target_piece_id uniqueidentifier
+, @captured_piece_id uniqueidentifier
 , @piece_color varchar(5)
 , @color_to_move varchar(5)
-, @target_piece_color varchar(max)
+, @captured_piece_color varchar(max)
 , @board_id uniqueidentifier
 
 select @board_id = g.board_id
@@ -28,6 +28,7 @@ from chess.board_piece as bp
 where bp.board_id = @board_id
 	and bp.col = @col_from
 	and bp.row = @row_from
+	and bp.is_captured = 0
 
 if @piece_id is null
 	exec chess.error @message = 'Invalid move from %square: square is empty', @col = @col_from, @row = @row_from
@@ -35,16 +36,17 @@ if @piece_id is null
 if @piece_color <> @color_to_move
 	exec chess.error @message = 'Invalid move from %square: wrong piece color', @col = @col_from, @row = @row_from
 
-select @target_piece_id	   = bp.id
-	 , @target_piece_color = cp.color_id
+select @captured_piece_id	   = bp.id
+	 , @captured_piece_color = cp.color_id
 from chess.board_piece as bp
 	left join chess.colored_piece as cp
 		on cp.id = bp.colored_piece_id
 where bp.board_id = @board_id
 	  and bp.col = @col_to
 	  and bp.row = @row_to
+	  and bp.is_captured = 0
 
-if @target_piece_id is not null and @piece_color = @target_piece_color
+if @captured_piece_id is not null and @piece_color = @captured_piece_color
 	exec chess.error @message = 'Invalid move to %square: square has the same color piece'
 				   , @col = @col_to
 				   , @row = @row_to

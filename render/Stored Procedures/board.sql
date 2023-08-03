@@ -49,6 +49,7 @@ from (
 			on bp.board_id = @board_id
 				and bp.row = r.n
 				and bp.col = c.n
+				and bp.is_captured = 0
 		left join chess.colored_piece as cp
 			on cp.id = bp.colored_piece_id
 		left join chess.piece as p

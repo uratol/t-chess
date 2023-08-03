@@ -2,8 +2,8 @@
   @board_id uniqueidentifier
 , @col_from tinyint out
 , @row_from tinyint out
-, @col_to tinyint = null out
-, @row_to tinyint = null out
+, @col_to tinyint out
+, @row_to tinyint out
 , @estimation real = null out
 as
 begin

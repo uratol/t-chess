@@ -23,6 +23,7 @@ from chess.board_piece as bp
 where bp.board_id = @board_id
 	  and bp.col = @col
 	  and bp.row = @row
+	  and bp.is_captured = 0
 
 
 if @piece_id is null

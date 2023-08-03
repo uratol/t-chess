@@ -1,14 +1,18 @@
 ﻿CREATE TABLE [chess].[move] (
-    [id]        UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
-    [half_move] INT              NOT NULL,
-    [board_id]  UNIQUEIDENTIFIER NULL,
-    [from_col]  TINYINT          NOT NULL,
-    [from_row]  TINYINT          NOT NULL,
-    [to_col]    TINYINT          NOT NULL,
-    [to_row]    TINYINT          NOT NULL,
+    [id]                UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
+    [half_move]         INT              NOT NULL,
+    [board_id]          UNIQUEIDENTIFIER NULL,
+    [from_col]          TINYINT          NOT NULL,
+    [from_row]          TINYINT          NOT NULL,
+    [to_col]            TINYINT          NOT NULL,
+    [to_row]            TINYINT          NOT NULL,
+    [captured_piece_id] UNIQUEIDENTIFIER NULL,
     PRIMARY KEY NONCLUSTERED ([id] ASC),
+    FOREIGN KEY ([captured_piece_id]) REFERENCES [chess].[board_piece] ([id]),
     CONSTRAINT [fk_move_board] FOREIGN KEY ([board_id]) REFERENCES [chess].[board] ([id]) ON DELETE CASCADE
 );
+
+
 
 
 GO

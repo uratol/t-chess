@@ -30,7 +30,7 @@ select @selected_piece_id = b.selected_piece
 	, @opponent = iif(b.color_to_move = 'White', g.black_player, g.white_player)
 from chess.game as g
 	join chess.board as b on b.id = g.board_id
-	left join chess.board_piece as bp on bp.id = b.selected_piece
+	left join chess.board_piece as bp on bp.id = b.selected_piece and bp.is_captured = 0
 	left join chess.colored_piece as cp on cp.id = bp.colored_piece_id
 where g.id = @game_id
 
@@ -49,6 +49,7 @@ from chess.board_piece as bp
 where bp.board_id = @board_id
 	and bp.col = @col_from
 	and bp.row = @row_from
+	and bp.is_captured = 0
 
 begin try
 

@@ -38,8 +38,8 @@ begin tran
 		, bp.col
 		, bp.row
 	from chess.board_piece as bp
-		join chess.colored_piece as cp
-			on cp.id = bp.colored_piece_id
+		join chess.colored_piece as cp on cp.id = bp.colored_piece_id
 	where bp.board_id = @board_id
+		and bp.is_captured = 0
 
 commit

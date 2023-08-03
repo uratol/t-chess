@@ -15,6 +15,7 @@ begin
 				, bp.row
 			from chess.board_piece as bp 
 			where bp.board_id = @board_id
+				and bp.is_captured = 0
 			for json path
 		) as pieces
 	from chess.board
