@@ -18,6 +18,9 @@ begin atomic
 		delete [engine_native].[legal_move]
 		where json_value('{' + @pieces + '}', '$."' + cast(piece_id as varchar(64)) + '"') is not null
 
+		delete [engine_native].[move]
+		where json_value('{' + @pieces + '}', '$."' + cast(piece_id as varchar(64)) + '"') is not null
+
 		delete [engine_native].[piece]
 		where board_id = @board_id
 

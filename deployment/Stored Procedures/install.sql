@@ -1,4 +1,4 @@
-﻿CREATE proc [deployment].[populate]
+﻿CREATE proc [deployment].[install]
 as
 
 set xact_abort on
@@ -30,7 +30,6 @@ if not exists(select * from engine.instance)
 		from (values
 				  ('native', 1, 1, 1, 1)
 				, ('json', 1, 1, 0, 0)
-				, ('stockfish', 0, 1, 0, 0)
 			) as v(id, use_for_rules, use_for_ai, default_for_rules, default_for_ai)
 
 if exists(select * from chess.colored_piece) begin

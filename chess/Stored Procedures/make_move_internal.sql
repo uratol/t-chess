@@ -7,18 +7,19 @@
 , @turn_piece_to varchar(6) = 'Queen'
 as
 
-declare @color_to_move varchar(5)
+declare @color varchar(5)
 , @board_id uniqueidentifier
 , @piece_id uniqueidentifier
 , @captured_piece_id uniqueidentifier
+, @piece varchar(6)
 
 select @board_id = g.board_id
-	, @color_to_move = b.color_to_move
 from chess.game as g
-	join chess.board as b on b.id = g.board_id
 where g.id = @game_id
 
 select @piece_id	= bp.id
+	, @piece = cp.piece_id
+	, @color = cp.color_id
 from chess.board_piece as bp
 	join chess.colored_piece as cp
 		on cp.id = bp.colored_piece_id
@@ -67,10 +68,31 @@ begin try
 					end
 		where bp.id = @piece_id
 
-		declare @opposit_color_to_move varchar(5) = chess.color_opposite(@color_to_move)
+
+		-- Castling
+		if @piece = 'King'
+			and @col_to in (2, 6)
+			and (@col_from = 4 and @row_from = 0 and @color = 'White'
+				or
+				@col_from = 4 and @row_from = 7 and @color = 'Black')
+		begin
+			update bp
+				set col = case @col_to 
+							when 6 then 5
+							when 2 then 3 end
+			from chess.board_piece as bp
+				join chess.colored_piece as cp on cp.id = bp.colored_piece_id
+			where board_id = @board_id
+				and cp.piece_id = 'Rook'
+				and cp.color_id = @color
+				and col = case @col_to 
+							when 6 then 7
+							when 2 then 0 end
+
+		end
 
 		update chess.board set selected_piece = null
-			, color_to_move = @opposit_color_to_move
+			, color_to_move = chess.color_opposite(@color)
 		where id = @board_id
 
 		exec chess.update_game_state @game_id = @game_id

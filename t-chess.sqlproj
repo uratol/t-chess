@@ -9,8 +9,7 @@
     <ProjectGuid>{5f7adbd5-c269-432d-8844-68b2f41d8f71}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
+    <RootPath />
     <RootNamespace>t_chess</RootNamespace>
     <AssemblyName>t_chess</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
@@ -48,7 +47,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
@@ -94,6 +92,9 @@
     <Folder Include="engine\Stored Procedures\" />
     <Folder Include="engine_native\User Defined Types\" />
     <Folder Include="engine\Tables\" />
+    <Folder Include="engine_stockfish\" />
+    <Folder Include="engine_stockfish\Stored Procedures\" />
+    <Folder Include="engine_stockfish\Functions\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="db.compare.scmp" />
@@ -223,7 +224,6 @@
     <Build Include="chess\Stored Procedures\make_move_ai.sql" />
     <Build Include="chess\Stored Procedures\generate_wrappers.sql" />
     <Build Include="Security\ai.sql" />
-    <Build Include="deployment\Stored Procedures\populate.sql" />
     <Build Include="Security\deployment.sql" />
     <Build Include="dbo\Stored Procedures\import.sql" />
     <Build Include="engine_native\Tables\move.sql" />
@@ -240,7 +240,6 @@
     <Build Include="engine_json\Functions\is_king_under_check.sql" />
     <Build Include="engine_json\Functions\board_to_json.sql" />
     <Build Include="engine_json\Functions\calc_board_state.sql" />
-    <Build Include="engine\Functions\proxy_pricedure_name.sql" />
     <Build Include="engine_json\Functions\piece_legal_moves.sql" />
     <Build Include="engine_json\Functions\piece_potential_moves.sql" />
     <Build Include="engine_json\Functions\parse_pieces.sql" />
@@ -296,6 +295,19 @@
     <Build Include="test\Stored Procedures\engine_native.ai_make_move.sql" />
     <Build Include="chess\Stored Procedures\undo_halfmove.sql" />
     <Build Include="chess\Stored Procedures\select_move_by_target_square.sql" />
+    <Build Include="engine_native\Tables\logs.sql" />
+    <Build Include="engine\Functions\proxy_procedure_name.sql" />
+    <Build Include="engine_native\Stored Procedures\minimax.sql" />
+    <Build Include="engine_native\Stored Procedures\calc_legal_moves_except_king_all_pieces.sql" />
+    <Build Include="deployment\Stored Procedures\install_stockfish.sql" />
+    <Build Include="deployment\Stored Procedures\install.sql" />
+    <Build Include="dbo\Stored Procedures\engine.sql" />
+    <Build Include="engine_stockfish\Stored Procedures\ai_make_move.sql" />
+    <Build Include="engine_native\User Defined Types\moves.sql" />
+    <Build Include="Security\engine_stockfish.sql" />
+    <Build Include="engine_stockfish\Functions\ai_make_move%40python_script.sql" />
+    <Build Include="test\Stored Procedures\engine_native.calc_legal_moves_except_king%40castling.sql" />
+    <Build Include="engine_stockfish\Stored Procedures\ai_make_move%40write_file.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac">
@@ -305,6 +317,6 @@
     </ArtifactReference>
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="populate.sql" />
+    <PostDeploy Include="db.post.script.sql" />
   </ItemGroup>
 </Project>

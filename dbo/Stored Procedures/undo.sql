@@ -23,7 +23,11 @@ if @game_state in ('Black to move', 'White to move')
 	
 		exec chess.undo_halfmove @game_id = @game_id
 
-		exec chess.undo_halfmove @game_id = @game_id
+		if exists(
+			select * from chess.move
+			where board_id = @board_id
+			)
+			exec chess.undo_halfmove @game_id = @game_id
 
 	end try
 	begin catch

@@ -114,7 +114,6 @@ begin atomic
 			and (@piece <> 'r' or direction.x * direction.y = 0)
 			and (@piece <> 'b' or direction.x * direction.y <> 0)
 
-
 	declare @legal_moves [engine_native].coordinates
 
 	insert @legal_moves(col, row)
@@ -180,6 +179,63 @@ begin atomic
 						)
 					)
 		)
+
+	-- Castling
+	if @piece = 'k'
+		and (@col = 4 and @row = 0 and @is_white = 1
+			or
+			@col = 4 and @row = 7 and @is_white = 0)
+	begin
+		declare 
+			  @king_castings bit = 0
+			, @queen_castings bit = 0
+			, @is_king_rook bit = 0
+			, @is_queen_rook bit = 0
+			, @is_king_squares_occupied bit = 0
+			, @is_queen_squares_occupied bit = 0
+		
+		select @king_castings = iif(@is_white = 1, white_king_castling, black_king_castling)
+			, @queen_castings = iif(@is_white = 1, white_queen_castling, black_queen_castling)
+		from engine_native.board
+		where id = @board_id
+
+		select @is_king_rook = iif(col = 7 and fen_symbol = 'r', 1, @is_king_rook)
+			, @is_queen_rook = iif(col = 0 and fen_symbol = 'r', 1, @is_queen_rook)
+			, @is_king_squares_occupied = iif(col in (5, 6), 1, @is_king_squares_occupied)
+			, @is_queen_squares_occupied = iif(col in (1, 2, 3), 1, @is_queen_squares_occupied)
+		from engine_native.piece
+		where board_id = @board_id
+			and row = iif(@is_white = 1, 0, 7)
+
+		insert @legal_moves(col, row)
+			select 6, 0
+			where @king_castings 
+				& @is_king_rook 
+				& ~@is_king_squares_occupied 
+				& @is_white = 1
+			union all
+			select 6, 7
+			where @king_castings
+				  & @is_king_rook
+				  & ~@is_king_squares_occupied
+				  & ~@is_white = 1
+			union all
+			select 2, 0
+			where @queen_castings
+				  & @is_queen_rook
+				  & ~@is_queen_squares_occupied
+				  & @is_white = 1
+
+			union all
+			select 2, 7
+			where @queen_castings
+				  & @is_queen_rook
+				  & ~@is_queen_squares_occupied
+				  & ~@is_white = 1
+
+	end
+
+
 
 	if @check_col is not null begin
 		set @check_result = 0

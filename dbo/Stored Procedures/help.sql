@@ -4,6 +4,10 @@ as
 set nocount on
 
 declare @text nvarchar(4000)
+, @engines nvarchar(4000) = (
+	select string_agg(id, ', ') within group(order by id)
+	from engine.instance
+	)
 
 declare @commands table (n int identity primary key, cmd nvarchar(64), description nvarchar(256))
 
@@ -18,6 +22,7 @@ insert @commands(cmd, description)
 		, ('play', 'New game if current is finished, play-by-play in demo mode')
 		, ('import ''...''', 'Set FEN position to board')
 		, ('export', 'Get current FEN position')
+		, ('engine ...', concat('Change engine. The allowed values: ', @engines))
 
 select @text =  string_agg(
 	concat(render. sprite(cmd, '32m')

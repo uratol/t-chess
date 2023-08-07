@@ -10,6 +10,10 @@ begin atomic
     with (transaction isolation level = repeatable read, language = N'English')
 
 	declare @captured_piece_id uniqueidentifier
+	, @is_white bit
+	, @is_king bit
+	, @col_from tinyint
+	, @row_from tinyint
 
 	update engine_native.board set
 		  white_to_move = ~white_to_move
@@ -39,7 +43,31 @@ begin atomic
 	update engine_native.piece
 		set   col = @col_to
 			, row = @row_to
+			, @is_king = iif(fen_symbol = 'k', 1, 0)
+			, @is_white = is_white
+			, @col_from = col
+			, @row_from = row
 	where id = @piece_id
+
+	-- Castling
+	if @is_king = 1
+		and @col_to in (2, 6)
+		and (@col_from = 4 and @row_from = 0 and @is_white = 1
+			or
+			@col_from = 4 and @row_from = 7 and @is_white = 0)
+	begin
+		update engine_native.piece
+			set col = case @col_to 
+						when 6 then 5
+						when 2 then 3 end
+		where board_id = @board_id
+			and fen_symbol = 'r'
+			and is_white = @is_white
+			and col = case @col_to 
+						when 6 then 7
+						when 2 then 0 end
+							
+	end
 
 	return
 end

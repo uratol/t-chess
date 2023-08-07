@@ -1,4 +1,4 @@
-﻿CREATE function [engine].[proxy_pricedure_name](@action nvarchar(64))
+﻿CREATE function [engine].[proxy_procedure_name](@action nvarchar(64))
 returns nvarchar(128)
 as
 begin

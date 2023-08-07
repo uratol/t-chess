@@ -54,8 +54,13 @@ if @game_id is null or @state not in ('White to move', 'Black to move')
 		, @black_player = @black_player
 		, @white_player = @white_player
 else
+begin try
 	if @state = 'White to move' and @white_player = 'AI'
 		or @state = 'Black to move' and @black_player = 'AI'
 	exec chess.make_move_ai @game_id = @game_id	
+end try
+begin catch
+	set @error_message = error_message()
+end catch
 
 exec render.game @game_id = @game_id, @error_message = @error_message
