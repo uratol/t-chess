@@ -1,4 +1,4 @@
-﻿CREATE   proc engine_native.minimax
+﻿CREATE   proc [template].[engine_native.minimax]
   @board_id uniqueidentifier
 , @white_to_move bit
 , @depth tinyint
@@ -9,9 +9,10 @@
 , @estimation real = null out
 , @alpha real = -99999999
 , @beta real = 99999999
-
+/**NATIVE with native_compilation, schemabinding
+*/
 as
-begin 
+begin /**NATIVE atomic with (transaction isolation level = repeatable read, language = N'English') */
 
 	declare @processed_moves [engine_native].[moves]
 		, @piece_id uniqueidentifier
@@ -35,8 +36,8 @@ begin
 
 	insert @legal_moves(piece_id, col, row)
 		select p.id, lm.col, lm.row
-		from engine_native.legal_move as lm  with(repeatableread)
-			join engine_native.piece as p  with(repeatableread) on p.id = lm.piece_id
+		from engine_native.legal_move as lm /**INTERPRETED with(repeatableread)*/
+			join engine_native.piece as p /**INTERPRETED with(repeatableread)*/ on p.id = lm.piece_id
 		where p.board_id = @board_id
 			and p.is_white = @white_to_move
 	
@@ -57,7 +58,7 @@ begin
 			, @move_col = lm.col
 			, @move_row = lm.row
 		from @legal_moves as lm
-			join engine_native.piece as p  with(repeatableread) on p.id = lm.piece_id
+			join engine_native.piece as p /**INTERPRETED with(repeatableread)*/ on p.id = lm.piece_id
 		where p.board_id = @board_id
 			and p.is_white = @white_to_move
 			and not exists(
@@ -81,15 +82,15 @@ begin
 			, @child_depth tinyint = @depth - 1
 			, @child_estimation real
 
-		
-		exec [engine_native].[minimax]
+		/**RECURSION_START*/
+		exec [engine_native].[minimax/**RECURSION_DEPTH*/]
 				  @board_id = @board_id
 				, @white_to_move = @child_white_to_move
 				, @depth = @child_depth
 				, @estimation = @child_estimation out
 				, @alpha = @alpha
 				, @beta = @beta
-		
+		/**RECURSION_FINISH*/
 
 		if @white_to_move = 1 and @child_estimation > @estimation
 				or @white_to_move = 0 and @child_estimation < @estimation

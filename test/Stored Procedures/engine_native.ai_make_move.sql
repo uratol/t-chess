@@ -43,10 +43,10 @@ exec engine_native.ai_make_move @board_id = @board_id
 							  , @row_from = @row_from out
 							  , @col_to = @col_to out
 							  , @row_to = @row_to out
-							  , @depth = 3
+							  , @depth = 4
 
 select test.assert_equals('Knight should not capture the any piece when three halfmove processed'
-	, 'E5G6'
+	, 'A8A7'
 	, chess.coordinates_to_move(@col_from, @row_from, @col_to, @row_to)
 	)
 

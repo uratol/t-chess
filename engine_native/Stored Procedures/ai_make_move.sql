@@ -5,7 +5,7 @@
 , @col_to tinyint out
 , @row_to tinyint out
 , @estimation real = null out
-, @depth tinyint = 2
+, @depth tinyint = 3
 as
 begin
 

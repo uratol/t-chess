@@ -95,6 +95,9 @@
     <Folder Include="engine_stockfish\" />
     <Folder Include="engine_stockfish\Stored Procedures\" />
     <Folder Include="engine_stockfish\Functions\" />
+    <Folder Include="template\" />
+    <Folder Include="template\Functions\" />
+    <Folder Include="template\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="db.compare.scmp" />
@@ -308,6 +311,13 @@
     <Build Include="engine_stockfish\Functions\ai_make_move%40python_script.sql" />
     <Build Include="test\Stored Procedures\engine_native.calc_legal_moves_except_king%40castling.sql" />
     <Build Include="engine_stockfish\Stored Procedures\ai_make_move%40write_file.sql" />
+    <Build Include="tools\Functions\string_replace_first.sql" />
+    <Build Include="template\Functions\replace_pattern.sql" />
+    <Build Include="test\Stored Procedures\template.replace_pattern.sql" />
+    <Build Include="engine_native\Stored Procedures\generate.sql" />
+    <Build Include="template\Stored Procedures\engine_native.minimax.sql" />
+    <Build Include="template\Stored Procedures\generate_object.sql" />
+    <Build Include="Security\template.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac">
