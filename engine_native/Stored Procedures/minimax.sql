@@ -1,4 +1,6 @@
-﻿CREATE   proc engine_native.minimax
+﻿-- WARNING!. This object is auto-generated from template [template].[engine_native.minimax].
+-- Do not modify it manually, use [template].[generate_object] instead
+CREATE proc engine_native.minimax
   @board_id uniqueidentifier
 , @white_to_move bit
 , @depth tinyint
@@ -33,10 +35,12 @@ begin
 
 	declare @legal_moves engine_native.moves
 
-	insert @legal_moves(piece_id, col, row)
-		select p.id, lm.col, lm.row
+	insert @legal_moves(piece_id, col, row, weight)
+		select p.id, lm.col, lm.row, capture.weight
 		from engine_native.legal_move as lm  with(repeatableread)
 			join engine_native.piece as p  with(repeatableread) on p.id = lm.piece_id
+			left join engine_native.piece as capture  with(repeatableread) 
+				on capture.board_id = @board_id and capture.col = lm.col and capture.row = lm.row and capture.is_captured = 0
 		where p.board_id = @board_id
 			and p.is_white = @white_to_move
 	
@@ -67,6 +71,7 @@ begin
 					 and pm.row = lm.row
 					 and pm.piece_id = p.id
 				)
+		order by lm.weight desc
 
 		if @piece_id is null
 			return
@@ -105,16 +110,17 @@ begin
 		if @white_to_move = 1 and @estimation > @beta 
 			or 
 			@white_to_move = 0 and @estimation < @alpha
-			set @break = 1
+			set @break = 1 -- BREACK is not allowed in natively compiled objects
+		else begin
+			if @white_to_move = 1 and @estimation > @alpha 
+					set @alpha = @estimation
+			else
+			if @white_to_move = 0 and @estimation < @beta
+					set @beta = @estimation
 
-		if @white_to_move = 1 and @estimation > @alpha 
-				set @alpha = @estimation
-		else
-		if @white_to_move = 0 and @estimation < @beta
-				set @beta = @estimation
-
-		insert @processed_moves(piece_id, col, row)
-		values (@piece_id, @move_col, @move_row)
+			insert @processed_moves(piece_id, col, row)
+			values (@piece_id, @move_col, @move_row)
+		end
 
 	end	
 

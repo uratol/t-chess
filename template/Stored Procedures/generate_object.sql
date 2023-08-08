@@ -1,4 +1,4 @@
-﻿CREATE proc template.generate_object
+﻿CREATE proc [template].[generate_object]
   @template_object_name nvarchar(256)
 , @object_full_name nvarchar(256)
 , @is_native_compiled bit
@@ -11,8 +11,6 @@ declare
 , @brln nchar(2) = nchar(13) + nchar(10)
 
 set @object_flat_name = parsename(@object_full_name, 2) + '.' + parsename(@object_full_name, 1)
-
-set @template_object_name = '[template].[' + @object_flat_name + ']'
 
 set @template_object_id = object_id(@template_object_name)
 
@@ -61,20 +59,30 @@ while @index <= 32 begin
 	set @index += 1
 end
 
+declare @autogenerate_warning nvarchar(max) = '-- WARNING!. This object is auto-generated from template '+ @template_object_name + '.'
+	+ @brln + '-- Do not modify it manually, use [template].[generate_object] instead'
 
 declare @depth int = @max_recursion_depth
 while @depth >= 0  begin
 	
 	set @sql = iif(@depth = @max_recursion_depth and @is_native_compiled = 1, @sql_leaf, @sql_branch)
 
-	declare @current_depth_suffix nvarchar(max) = iif(@depth = 0 or @is_native_compiled = 0, '', format(@depth, '_00'))
-		, @next_depth_suffix nvarchar(max) = iif(@is_native_compiled = 1, format(@depth + 1, '_00'), '')
+	declare @current_depth_suffix nvarchar(max) = iif(@depth = 0 or @is_native_compiled = 0
+															, ''
+															, format(@depth, '_00'))
+		, @next_depth_suffix nvarchar(max) = iif(@is_native_compiled = 1
+												, format(@depth + 1, '_00')
+												, '')
 
 	set @sql = template.replace_pattern(@sql, 'RECURSION_DEPTH', @next_depth_suffix)
 
 	declare @object_name nvarchar(max) = @object_flat_name + @current_depth_suffix
 
 	set @sql = tools.string_replace_first(@sql, @template_object_name, @object_name)
+
+
+	set @sql = @autogenerate_warning + @brln
+				+ @sql
 
 	exec(@sql)
 

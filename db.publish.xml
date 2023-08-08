@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseName>cormed</TargetDatabaseName>
+    <DeployScriptFileName>db.sql</DeployScriptFileName>
+    <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
+    <DatabaseEdition>Basic</DatabaseEdition>
+    <DatabaseServiceObjective>Basic</DatabaseServiceObjective>
+    <DatabaseMaximumSize>2</DatabaseMaximumSize>
+    <DisableAndReenableDdlTriggers>False</DisableAndReenableDdlTriggers>
+    <ProfileVersionNumber>1</ProfileVersionNumber>
+    <DropObjectsNotInSource>True</DropObjectsNotInSource>
+    <DoNotDropCredentials>True</DoNotDropCredentials>
+    <DoNotDropDatabaseRoles>True</DoNotDropDatabaseRoles>
+    <DoNotDropDatabaseScopedCredentials>True</DoNotDropDatabaseScopedCredentials>
+    <DoNotDropLinkedServerLogins>True</DoNotDropLinkedServerLogins>
+    <DoNotDropLinkedServers>True</DoNotDropLinkedServers>
+    <DoNotDropLogins>True</DoNotDropLogins>
+    <DoNotDropPermissions>True</DoNotDropPermissions>
+    <DoNotDropRoleMembership>True</DoNotDropRoleMembership>
+    <DoNotDropSecurityPolicies>False</DoNotDropSecurityPolicies>
+    <DoNotDropServerRoleMembership>True</DoNotDropServerRoleMembership>
+    <DoNotDropServerRoles>True</DoNotDropServerRoles>
+    <DoNotDropUsers>True</DoNotDropUsers>
+    <TargetConnectionString>Data Source=tcp:cormed.database.windows.net,1433;Persist Security Info=True;User ID=cor-admin;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False</TargetConnectionString>
+    <!--<AdditionalDeploymentContributors>AgileSqlClub.DeploymentFilterContributor</AdditionalDeploymentContributors>
+    <AdditionalDeploymentContributorPaths>C:\dac160tools\AgileSqlClub.SqlPackageFilter.dll</AdditionalDeploymentContributorPaths>
+    <AdditionalDeploymentContributorArguments>SqlPackageFilter=IgnoreSchema(content)</AdditionalDeploymentContributorArguments>-->
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>

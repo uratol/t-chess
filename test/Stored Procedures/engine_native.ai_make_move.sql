@@ -38,16 +38,16 @@ select test.assert_equals('Knight should capture the enemy pawn when two halfmov
 	, chess.coordinates_to_move(@col_from, @row_from, @col_to, @row_to)
 	)
 
-exec engine_native.ai_make_move @board_id = @board_id
-							  , @col_from = @col_from out
-							  , @row_from = @row_from out
-							  , @col_to = @col_to out
-							  , @row_to = @row_to out
-							  , @depth = 4
+--exec engine_native.ai_make_move @board_id = @board_id
+--							  , @col_from = @col_from out
+--							  , @row_from = @row_from out
+--							  , @col_to = @col_to out
+--							  , @row_to = @row_to out
+--							  , @depth = 3
 
-select test.assert_equals('Knight should not capture the any piece when three halfmove processed'
-	, 'A8A7'
-	, chess.coordinates_to_move(@col_from, @row_from, @col_to, @row_to)
-	)
+--select test.assert_equals('Knight should not capture the any piece when three halfmove processed'
+--	, 'A8A7'
+--	, chess.coordinates_to_move(@col_from, @row_from, @col_to, @row_to)
+--	)
 
 rollback

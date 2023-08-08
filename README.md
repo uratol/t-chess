@@ -21,10 +21,9 @@ The goal of the project is to demonstrate T-SQL features, in particular:
 
 **How to install:**
 
-
  - Open project in Visual Studio 2022 with SSDT plugin installed.
- - Double click the file "db.publish.xml"
- - Select the target server and database and click Publish.
+ - Double click the file "db.publish.xml". 
+ - Select the target server and database and click Publish. Once the database schema is deployed, lookup tables will be populated and tests will be performed.
  - Change the file "t-chess.bat" with your database credentials
  - Open the PowerShell console and set the font NSimSun or another supports unicode chess symbols.
  - Run "t-chess.bat"
