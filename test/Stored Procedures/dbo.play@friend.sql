@@ -62,7 +62,7 @@ select test.assert_equals('State should be Black to move when piece is moved'
 	 where id = @game_id)
  )
 
-exec b8 'c5'
+exec B8 'c5'
 
 select test.assert_equals('The state should remain the same if an illegal move has been made'
  , 'Black to move'

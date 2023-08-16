@@ -2,7 +2,7 @@
 as
 
 declare @board nvarchar(max) 
-, @start_fen nvarchar(max) = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+, @start_fen nvarchar(max) = chess.fen_starting_position()
 , @new_fen nvarchar(max)
 
 set @board = engine_json.json_board_from_fen(@start_fen)

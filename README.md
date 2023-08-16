@@ -24,7 +24,7 @@ The goal of the project is to demonstrate T-SQL features, in particular:
  - Open project in Visual Studio 2022 with SSDT plugin installed.
  - Double click the file "db.publish.xml". 
  - Select the target server and database and click Publish. Once the database schema is deployed, lookup tables will be populated and tests will be performed.
- - Change the file "t-chess.bat" with your database credentials
+ - Change the file "t-chess.bat" with your database credentials.
  - Open the PowerShell console and set the font NSimSun or another supports unicode chess symbols.
  - Run "t-chess.bat"
  - You will see the starting chess board and a command promt. 
@@ -59,8 +59,12 @@ The goal of the project is to demonstrate T-SQL features, in particular:
  - To switch back to t-sql engine put
 	engine native
 
-
 **Limitations:**
  - en-passant is not supported
+ - 3 three repeating positions rule is not supported
  - 50 moves rule is not supported
  - castling is supported, except the empty squre under attack and rook/king previous move checking.
+
+**Tests:**
+ - Each test is an stored procedure in the schema "test", except [test].[run]
+ - To run all tests execute [test].[run] stored procedure.

@@ -318,6 +318,9 @@
     <Build Include="template\Stored Procedures\engine_native.minimax.sql" />
     <Build Include="template\Stored Procedures\generate_object.sql" />
     <Build Include="Security\template.sql" />
+    <Build Include="engine_native\Stored Procedures\minimax___RECURSION_DEPTH__.sql" />
+    <Build Include="chess\Functions\fen_starting_position.sql" />
+    <Build Include="test\Stored Procedures\engine_native.ai_make_move%40starting_position.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\160\SqlSchemas\master.dacpac">

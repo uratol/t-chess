@@ -15,8 +15,8 @@ CREATE proc engine_native.minimax
 as
 begin 
 
-	declare @processed_moves [engine_native].[moves]
-		, @piece_id uniqueidentifier
+	declare 
+		  @piece_id uniqueidentifier
 		, @piece_col tinyint
 		, @piece_row tinyint
 		, @move_col tinyint
@@ -64,13 +64,6 @@ begin
 			join engine_native.piece as p  with(repeatableread) on p.id = lm.piece_id
 		where p.board_id = @board_id
 			and p.is_white = @white_to_move
-			and not exists(
-				select 1
-				from @processed_moves as pm
-				where pm.col = lm.col
-					 and pm.row = lm.row
-					 and pm.piece_id = p.id
-				)
 		order by lm.weight desc
 
 		if @piece_id is null
@@ -96,8 +89,11 @@ begin
 				, @beta = @beta
 		
 
-		if @white_to_move = 1 and @child_estimation > @estimation
-				or @white_to_move = 0 and @child_estimation < @estimation
+		declare @compare_estimation real = @child_estimation - @estimation
+
+		if @compare_estimation = 0 and rand() > 0.5 -- random move if estimation the same
+				or @white_to_move = 1 and @compare_estimation > 0
+				or @white_to_move = 0 and @compare_estimation < 0
 			select @estimation = @child_estimation
 				, @col_from = @piece_col
 				, @row_from = @piece_row
@@ -110,7 +106,7 @@ begin
 		if @white_to_move = 1 and @estimation > @beta 
 			or 
 			@white_to_move = 0 and @estimation < @alpha
-			set @break = 1 -- BREACK is not allowed in natively compiled objects
+			set @break = 1 -- BREAK is not allowed in natively compiled objects
 		else begin
 			if @white_to_move = 1 and @estimation > @alpha 
 					set @alpha = @estimation
@@ -118,8 +114,10 @@ begin
 			if @white_to_move = 0 and @estimation < @beta
 					set @beta = @estimation
 
-			insert @processed_moves(piece_id, col, row)
-			values (@piece_id, @move_col, @move_row)
+			delete @legal_moves
+			where piece_id = @piece_id
+				and col = @move_col
+				and row = @move_row
 		end
 
 	end	

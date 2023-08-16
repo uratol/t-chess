@@ -2,12 +2,14 @@
   @game_id uniqueidentifier = null out
 , @white_player varchar(20) = 'Player'
 , @black_player varchar(20) = 'AI'
-, @starting_position_fen nvarchar(54) = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+, @starting_position_fen nvarchar(54) = null 
 as
 
 set xact_abort on
 
 set @game_id = newid()
+
+set @starting_position_fen = isnull(@starting_position_fen, [chess].[fen_starting_position]())
 
 begin tran
 
@@ -23,5 +25,5 @@ begin tran
 
 	if @white_player = 'AI' and @color_to_move = 'White'
 			or @black_player = 'AI' and @color_to_move = 'Black'
-		exec chess.chess.make_move_ai @game_id = @game_id
+		exec chess.make_move_ai @game_id = @game_id
 commit

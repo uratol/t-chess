@@ -7,6 +7,7 @@ as
 declare @render_str nvarchar(max)
 , @selected_piece_id uniqueidentifier
 , @legal_moves nvarchar(max)
+, @brln nvarchar(2) = nchar(13) + nchar(10)
 
 select @selected_piece_id = selected_piece
 from chess.board
@@ -15,8 +16,7 @@ where id = @board_id
 if @selected_piece_id is not null
 	exec engine.legal_moves @piece_id = @selected_piece_id, @moves = @legal_moves out
 
-select @render_str = string_agg(rendered_row, '
-') within group (order by iif(@flip = 1, -row, row) desc)
+select @render_str = string_agg(rendered_row, @brln) within group (order by iif(@flip = 1, -row, row) desc)
 from (
 	select r.n								 as row
 		 , concat(
@@ -74,11 +74,12 @@ from (
 	where r.n < 8
 	group by r.n) as t
 
-if @render_labels = 1
+if @render_labels = 1 begin
 	declare @labels nvarchar(64) = 'a  b  c  d  e  f  g  h'
 	if @flip = 1 set @labels = reverse(@labels)
 	
-	set @render_str += '
-    ' + @labels
+	set @render_str += @brln + @labels
+
+end
 
 print @render_str
