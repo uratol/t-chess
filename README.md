@@ -6,10 +6,10 @@
 
 T-Chess started as a personal experiment to see how far Microsoft SQL Server 2022 can be pushed beyond its usual OLTP/analytics duties.  The result is a fully-playable chess engine, UI and test suite — all written in T-SQL.  Use it as a code lab to explore:
 
-* In-Memory OLTP (memory-optimised tables & natively-compiled procedures)&#x20;
-* AI search techniques (minimax + ?-? pruning) implemented in a set-based language
-* Dynamic SQL code generation&#x20;
-* Console rendering directly from the database&#x20;
+* In-Memory OLTP (memory-optimised tables & natively-compiled procedures)
+* AI search techniques (minimax + alpha-beta pruning) implemented in a set-based language
+* Dynamic SQL code generation
+* Console rendering directly from the database
 * Test-Driven Development in T-SQL with a custom T-TEST framework
 
 ## Demo
@@ -93,13 +93,13 @@ Pull requests that address any of the above are more than welcome ??.
 
 ## Testing
 
-All unit tests live in the **test** schema.  Run the full suite with:
+All unit tests live in the **tests** schema.  Run the full suite with:
 
 ```sql
 EXEC test.run;
 ```
 
-The framework demonstrates:
+The framework [T-TEST](https://github.com/uratol/t-test) is used and demonstrates:
 
 * Transaction wrapping for automatic rollback
 * Sentinel-style exception testing
@@ -108,7 +108,7 @@ The framework demonstrates:
 ## Project layout
 
 ```
-chess/            -- core tables & views
+chess/            -- core tables, views and logic
 engine_native/    -- minimax + ?-? pruning implementation
 engine_json/      -- slower, JSON-based search for comparison
 engine_stockfish/ -- UCI bridge to an external Stockfish process
