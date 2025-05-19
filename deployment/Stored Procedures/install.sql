@@ -47,7 +47,7 @@ begin tran
 	 values ('Bishop', nchar(9821))
 		  , ('King', nchar(9818))
 		  , ('Knight', nchar(9822))
-		  , ('Pawn', nchar(9823))
+		  , ('Pawn', nchar(9817)) -- 9823 is displayed incorrect in Power Shell
 		  , ('Queen', nchar(9819))
 		  , ('Rook', nchar(9820))
 

@@ -1,3 +1,3 @@
-﻿CREATE SCHEMA [render]
+﻿CREATE SCHEMA [tests]
     AUTHORIZATION [dbo];
 

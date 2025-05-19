@@ -1,4 +1,4 @@
-﻿create function [test].[is_equal]
+﻿CREATE function test.is_equal
 ( @expected nvarchar(max)
 , @actual nvarchar(max)
 )
@@ -15,7 +15,7 @@ begin
 
 	if isjson(@expected) = 1 
 		if isjson(@actual) = 1
-			if [private].[test.json_hash](@expected) = [private].[test.json_hash](@actual)
+			if test.normalize_json(@expected) = test.normalize_json(@actual)
 				return 1
 
     return 0

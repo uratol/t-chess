@@ -78,7 +78,7 @@ if @render_labels = 1 begin
 	declare @labels nvarchar(64) = 'a  b  c  d  e  f  g  h'
 	if @flip = 1 set @labels = reverse(@labels)
 	
-	set @render_str += @brln + @labels
+	set @render_str += @brln  + '    ' + @labels
 
 end
 
