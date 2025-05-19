@@ -10,7 +10,7 @@ T-Chess started as a personal experiment to see how far Microsoft SQL Server 202
 * AI search techniques (minimax + alpha-beta pruning) implemented in a set-based language
 * Dynamic SQL code generation
 * Console rendering directly from the database
-* Test-Driven Development in T-SQL with a custom T-TEST framework
+* Test-Driven Development in T-SQL with a custom [T-TEST framework](https://github.com/uratol/t-test)
 
 ## Demo
 
