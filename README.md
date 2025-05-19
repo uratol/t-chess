@@ -114,7 +114,7 @@ deployment/       -- install helpers & data seeds
 
 Whether you spot a typo or want to implement en-passant, feel free to
 open an Issue or a Pull Request.  Please follow the existing coding
-style (`.editorconfig`) and include tests for new behaviour.
+style and include tests for new behaviour.
 
 ## License
 
