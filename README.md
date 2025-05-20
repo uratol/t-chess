@@ -102,13 +102,52 @@ The framework [T-TEST](https://github.com/uratol/t-test) is used and demonstrate
 
 ```
 chess/            -- core tables, views and logic
-engine_native/    -- minimax + α-β pruning implementation
-engine_json/      -- slower, JSON-based search for comparison
+engine/           -- shared helpers, types & metadata common to all engines
+engine_native/    -- minimax + α‑β pruning implementation (pure T‑SQL)
+engine_json/      -- demo engine; legal‑moves only + random choice, unfinished
 engine_stockfish/ -- UCI bridge to an external Stockfish process
 render/           -- console output helpers
 tests/            -- unit tests (stored procs)
 deployment/       -- install helpers & data seeds
 ```
+
+*Each* folder named **engine\_\*\*\*\*/** hosts a concrete engine implementation, while **engine/** provides the common abstractions they build upon.
+
+## Engines
+
+T‑Chess supports a plug‑in architecture for chess engines. Every engine lives in its own schema  named **engine\_\*\*\*\*/** and must expose at least:
+
+`[engine_myengine].[legal_moves]`
+`[engine_myengine].[make_move]`
+
+See **engine\_native/** for a reference implementation.
+
+### Built‑in engines
+
+| Engine        | Notes                                                                                                            |
+| ------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **native**    | Minimax + α‑β pruning implementation in pure T‑SQL                                                               |
+| **stockfish** | External Stockfish 16+ binary via UCI                                                                             |
+| **json**      | Working via JSON data representation\*. Legacy. Validates legal moves using JSON data representation; unfinished |
+
+### Adding a new engine
+
+1. Create a schema **engine\_\<your‑name>**.
+2. Implement `[engine_<your‑name>].[legal_moves]`  and `[engine_<your‑name>].[make_move]`.
+3. Register the engine so the launcher can find it:
+
+   ```sql
+   INSERT engine.instance(name, use_for_rules, use_for_ai)
+   VALUES(N'MySuperEngine', 1, 1);
+   ```
+4. Apply engine — switch to it in the console with:
+
+   ```
+   engine mysuper;
+   ```
+
+---
+
 
 ## Contributing
 
