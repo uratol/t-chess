@@ -118,7 +118,6 @@
     <Build Include="test\Functions\assert_equals.sql" />
     <Build Include="test\Stored Procedures\run.sql" />
     <Build Include="dbo\Stored Procedures\error.sql" />
-    <Build Include="tools\Tables\number.sql" />
     <Build Include="chess\Tables\colored_piece.sql" />
     <Build Include="chess\Tables\move.sql" />
     <Build Include="chess\Tables\game.sql" />

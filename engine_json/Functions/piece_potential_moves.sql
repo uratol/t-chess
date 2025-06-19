@@ -64,7 +64,7 @@ begin
 	if @piece in ('Bishop', 'Queen', 'Rook', 'King')
 		insert @result(col, row)
 		select moves.col, moves.row
-		from tools.number as n
+		from generate_series(1, iif(@piece = 'King', 1, 7)) as n
 			cross apply (values
 					  (1, 1)
 					, (1, -1)
@@ -75,9 +75,8 @@ begin
 					, (0, 1)
 					, (0, -1)
 					) as direction(x, y)
-			cross apply (values(@col + n.n * direction.x, @row + n.n * direction.y)) as moves(col, row)
-		where n.n between 1 and iif(@piece = 'King', 1, 7)
-			and moves.col between 0 and 7
+			cross apply (values(@col + n.value * direction.x, @row + n.value * direction.y)) as moves(col, row)
+		where moves.col between 0 and 7
 			and moves.row between 0 and 7
 			and (@piece <> 'Rook' or direction.x * direction.y = 0)
 			and (@piece <> 'Bishop' or direction.x * direction.y <> 0)

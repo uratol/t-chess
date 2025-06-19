@@ -7,12 +7,10 @@ declare @cell nvarchar(max)
 declare cells cursor local for
 	select cell
 	from (
-		select nchar(c.n + 65) as [field]
-			 , r.n + 1		   as [rank]
-		from tools.number as r
-			join tools.number as c
-				on c.n < 8
-		where r.n < 8
+		select nchar(c.value + 65) as [field]
+			 , r.value + 1		   as [rank]
+		from generate_series(0, 7) as r
+			cross join generate_series(0, 7) as c
 		) as cells
 		outer apply (values(concat(field, [rank]))) as v(cell)
 open cells

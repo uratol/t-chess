@@ -3,26 +3,10 @@ as
 
 set xact_abort on
 
-if not exists(select * from tools.number)
-	with n as
-		(
-			select *
-			from (values
-			(0), (1), (2), (3), (4), (5), (6), (7), (8), (9)
-			) as v (n))
-	insert tools.number(n)
-		select n1.n
-		 + n2.n * 10
-		 + n3.n * 100
-		from n as n1
-			cross join n as n2
-			cross join n as n3
-
 if not exists(select * from engine_native.number)
 	insert engine_native.number(n)
-		select n
-		from tools.number
-		where n < 8
+		select value
+		from generate_series(0, 7)
 
 if not exists(select * from engine.instance)
 	insert engine.instance(id, use_for_rules, use_for_ai, default_for_rules, default_for_ai)
